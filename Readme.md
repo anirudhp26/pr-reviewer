@@ -38,6 +38,27 @@ This is a FastAPI application. Follow the steps below to set up and run the appl
 
     docker-compose up
     ```
+## API Documentation
+
+1. ```json
+    POST /analyze-pr
+    ```
+    Body
+    ```json
+    {
+        "repo_url": "<REPOSITORY_URL>",
+        "pr_number": <PR_ID>,
+        "github_token": "<YOUR_TOKEN>"
+    }
+    ```
+
+2.  ```json
+    GET /status/<id>
+    ```
+
+3.  ```json
+    GET /results/<id>
+    ``` 
 
 ## License
 
