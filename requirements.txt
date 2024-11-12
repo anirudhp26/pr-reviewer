@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+jinja2
+langchain
+langchain-ollama
+langchain-core
+celery
+redis
+eventlet
+requests
+pydantic
