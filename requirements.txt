@@ -9,3 +9,4 @@ redis
 eventlet
 requests
 pydantic
+pytest

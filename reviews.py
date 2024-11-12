@@ -3,8 +3,22 @@ from langchain_core.prompts import PromptTemplate
 import time
 from celery import Celery
 import requests
+import redis
+import os
 
-connection_link = "redis://redis:6379/0"
+REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
+REDIS_PORT = os.getenv("REDIS_PORT", 6379)
+
+connection_link = f"redis://{REDIS_HOST}:{REDIS_PORT}/0"
+def chek_redis():
+    try:
+        redis.Redis(host="localhost", port=6379, db=0).ping()
+        return True
+    except redis.exceptions.ConnectionError:
+        return False
+    
+if not chek_redis():
+    raise ConnectionError("Redis is not connected")
 
 celery_app = Celery('tasks', backend=connection_link, broker=connection_link, result_expires=60 * 60 * 16)
 
@@ -13,9 +27,19 @@ celery_app.conf.update(
     result_serializer='json',
     accept_content=['json'],
     task_ignore_result=False,
-    result_backend='redis://redis:6379/0'
+    result_backend=connection_link,
 )
 
+# TESTS
+@celery_app.task
+def add_numbers(x, y):
+    try:
+        return x + y
+    except Exception as exc:
+        return exc
+
+
+#MAIN CODE
 llm = OllamaLLM(model="llama3.2", base_url="http://localhost:11434/api/generate")
 
 prompt = PromptTemplate.from_template("""
