@@ -40,7 +40,7 @@ This is a FastAPI application. Follow the steps below to set up and run the appl
     ```
 ## API Documentation
 
-1. ```json
+1. ```bash
     POST /analyze-pr
     ```
     Body
@@ -52,11 +52,11 @@ This is a FastAPI application. Follow the steps below to set up and run the appl
     }
     ```
 
-2.  ```json
+2.  ```bash
     GET /status/<id>
     ```
 
-3.  ```json
+3.  ```bash
     GET /results/<id>
     ``` 
 
